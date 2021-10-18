@@ -1,0 +1,18 @@
+{
+  "main": "logger.js",
+  "name": "ethereum-gas-fee-logger",
+  "description": "logs ethereum gas prices from ethermine.com.",
+  "version": "1.0.0",
+  "author": "fisheiyy",
+  "type": "module",
+  "dependencies": {
+    "fs-extra": "^10.0.0",
+    "node-fetch": "^3.0.0"
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "github.com/Fisheiyy/ethereum-gas-fee-logger"
+    }
+  ]
+}
