@@ -42,7 +42,7 @@ async function gasFee() {
     await gasFee()
     i++
     var lowestFee = Math.min(...priceArray)
-    process.title = `Ethermine Gas Fee Logger | High Fee's: ${highlogged} | Low Fee's: ${lowlogged} | Current Fee: $${currentFee} | Lowest Fee: $${lowestFee}`
+    process.title = `Ethermine Gas Fee Logger | High Fee's: ${highlogged} | Low Fee's: ${lowlogged} | Current Fee: $${currentFee} | Lowest Fee of $${lowestFee} at ${new Date().toLocaleTimeString('en-US')}`
     await wait(25000)
     if (i == 4) {
       console.clear()
