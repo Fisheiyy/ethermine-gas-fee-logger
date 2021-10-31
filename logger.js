@@ -4,6 +4,8 @@ const wait = ms => new Promise((resolve, reject) => setTimeout(resolve, ms))
 var highlogged = 0
 var lowlogged = 0
 var currentFee = 0
+var lowestFee = 100
+var lowestFeeTime = 1E9
 var priceArray = []
 process.title = `Ethermine Gas Fee Logger`
 
@@ -22,6 +24,10 @@ async function gasFee() {
   var gweiPrice = ethPrice / 1000000000
   var price = (ethermineGwei * gweiPrice * 21000).toFixed(2)
   priceArray.push(price)
+  if (price <= lowestFee) {
+    lowestFee = Math.min(...priceArray)
+    lowestFeeTime = new Date().toLocaleTimeString('en-US')
+  }
   var timeNow = new Date()
   currentFee = price
   if (price > 5) {
@@ -41,8 +47,7 @@ async function gasFee() {
   while (true) {
     await gasFee()
     i++
-    var lowestFee = Math.min(...priceArray)
-    process.title = `Ethermine Gas Fee Logger | High Fee's: ${highlogged} | Low Fee's: ${lowlogged} | Current Fee: $${currentFee} | Lowest Fee of $${lowestFee} at ${new Date().toLocaleTimeString('en-US')}`
+    process.title = `Ethermine Gas Fee Logger | High Fee's: ${highlogged} | Low Fee's: ${lowlogged} | Current Fee: $${currentFee} | Lowest Fee of $${lowestFee} at ${lowestFeeTime}`
     await wait(25000)
     if (i == 4) {
       console.clear()

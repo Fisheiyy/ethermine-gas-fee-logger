@@ -1,2 +1,1 @@
 node clear
-pause
