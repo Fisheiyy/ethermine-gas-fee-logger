@@ -1,7 +1,8 @@
 import {Builder, By, Key, until} from 'selenium-webdriver'
 import fs from "fs-extra"
 import fetch from "node-fetch"
-import prompt from "prompt-sync"
+import prompt from 'prompt-sync'
+const promptSync = prompt()
 const wait = ms => new Promise((resolve, reject) => setTimeout(resolve, ms))
 var highlogged = 0
 var lowlogged = 0
@@ -68,7 +69,7 @@ async function payout() {
 
 (async function loop() {
   if (start == 1) {
-    var verdict = prompt("Do you want to enable Automatic Payout? ")
+    var verdict = promptSync("Do you want to enable Automatic Payout? ")
     if (verdict == "yes") {
       start = 0
       autoPayout = 1
