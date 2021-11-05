@@ -1,6 +1,7 @@
 import {Builder, By, Key, until} from 'selenium-webdriver'
 import fs from "fs-extra"
 import fetch from "node-fetch"
+import prompt from "prompt-sync"
 const wait = ms => new Promise((resolve, reject) => setTimeout(resolve, ms))
 var highlogged = 0
 var lowlogged = 0
@@ -8,6 +9,8 @@ var currentFee = 0
 var lowestFee = 100
 var lowestFeeTime = 1E9
 var priceArray = []
+var autoPayout = 0
+var start = 1
 process.title = `Ethermine Gas Fee Logger`
 
 async function gasFee() {
@@ -28,8 +31,10 @@ async function gasFee() {
     lowestFee = Math.min(...priceArray)
     lowestFeeTime = new Date().toLocaleTimeString('en-US')
     if (price <= 8) {
-      console.log("Paying out Ethereum")
-      payout()
+      if (autoPayout == 1) {
+        console.log("Paying out Ethereum")
+        payout()
+      }
     }
   }
   var timeNow = new Date()
@@ -62,6 +67,14 @@ async function payout() {
 }
 
 (async function loop() {
+  if (start == 1) {
+    var verdict = prompt("Do you want to enable Automatic Payout? ")
+    if (verdict == "yes") {
+      start = 0
+      autoPayout = 1
+    }
+    else {start = 0}
+  }
   var i = 0
   while (true) {
     await gasFee()
